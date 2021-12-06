@@ -22,6 +22,10 @@ app.get("/", (req, res) => {
 
 })
 
+// const d = new Date( '2021-12-06T09:55:03.565Z' );
+// console.log(d.getSeconds().toString().length)
+// console.log( ))
+
 app.post('/studententry', 
 ( req, res ) => {
 
@@ -42,9 +46,10 @@ app.post('/studententry',
             ResidenceTelephone,
             Province,
             ResidentialAddress,
-            date,
-            time
+            date
         } = req.body;
+
+        const d = new Date( date );
 
         db.getConnection(
             ( err, connection ) => {
@@ -76,8 +81,8 @@ app.post('/studententry',
                             ResidenceTelephone,
                             Province,
                             ResidentialAddress,
-                            date,
-                            time
+                            d,
+                            d.getHours() + ':' + d.getMinutes() + ':' + (  d.getSeconds().toString().length === 1 ? '0' + d.getSeconds() : d.getSeconds() )
                         ],
                         ( err ) => {
                 
