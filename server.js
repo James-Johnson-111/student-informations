@@ -18,6 +18,12 @@ app.use( express.static( path.join( __dirname, 'client' ) ) );
 // SET MAXIMUM SOCKETS CONNECTIONS TO INFINITY
 // https.globalAgent.maxSockets = Infinity;
 
+app.get("/", (req, res) => {
+
+    res.sendFile(path.resolve(__dirname, 'client', 'index.html'));
+
+})
+
 // CREATE TCP SOCKET
 const io = require('socket.io')( app,
     {
@@ -30,17 +36,11 @@ const io = require('socket.io')( app,
 
 module.exports = io;
 
-app.get("/", (req, res) => {
+// app.get("*", (req, res) => {
 
-    res.sendFile(path.resolve(__dirname, 'client', 'index.html'));
+//     res.sendFile(path.resolve(__dirname, 'client', 'index.html'));
 
-})
-
-app.get("*", (req, res) => {
-
-    res.sendFile(path.resolve(__dirname, 'client', 'index.html'));
-
-})
+// })
 
 app.use( require('./routes/students') );
 
