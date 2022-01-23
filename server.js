@@ -30,8 +30,6 @@ const io = require('socket.io')( app,
 
 module.exports = io;
 
-app.use( require('./routes/students') );
-
 app.get("/", (req, res) => {
 
     res.sendFile(path.resolve(__dirname, 'client', 'index.html'));
@@ -43,6 +41,9 @@ app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'index.html'));
 
 })
+
+app.use( require('./routes/students') );
+
 
 app.listen(PORT, () => {
     
