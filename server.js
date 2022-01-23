@@ -18,17 +18,8 @@ app.use( express.static( path.join( __dirname, 'client' ) ) );
 // SET MAXIMUM SOCKETS CONNECTIONS TO INFINITY
 https.globalAgent.maxSockets = Infinity;
 
-// CREATING HTTPS PROTOCOL SERVER
-const sslserver = https.createServer(
-    {
-        key: fs.readFileSync('client/SSL/key.pem'),
-        cert: fs.readFileSync('client/SSL/cert.pem')
-    },
-    app
-)
-
 // CREATE TCP SOCKET
-const io = require('socket.io')( sslserver,
+const io = require('socket.io')( app,
     {
         cors: {
             origin: "*",
@@ -53,39 +44,7 @@ app.get("*", (req, res) => {
 
 })
 
-// if ( cluster.isMaster ) // CLUSTER PROCESS IS A MASTER PROCESS
-// {
-//     // IF TRUE
-//     for 
-//     (
-//         let x = 0; x < CPUs; x++
-//     )
-//     {
-//         cluster.fork(); // CREATE WORKERS EQUAL TO THE NUMBER OF CPUS WE HAVE
-//     }
-
-//     // WHEN A WORKER PROCESS IS DIED
-//     cluster.on(
-//         'exit', 
-//         ( worker ) => {
-//             console.log(`worker ${ worker.process.pid } died`);
-//             cluster.fork(); // CREATING A NEW WORKER
-//         }
-//     );
-
-// }else // CLUSTER PROCESS IS A WORKER (CHILD) PROCESS
-// {
-//     // IF FALSE
-//     sslserver.listen(PORT, () => {
-    
-//         // console.log( sslserver.address() )
-//         console.log("SERVER HAS BEEN STARTED WITH PROCESS ID: " + process.pid + " at ");
-    
-//     });
-
-// }
-
-sslserver.listen(PORT, () => {
+app.listen(PORT, () => {
     
     console.log("SERVER HAS BEEN STARTED WITH PROCESS ID: " + process.pid + " at localhost:" + PORT);
 
