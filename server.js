@@ -16,7 +16,7 @@ app.use( express.json() );
 app.use( express.static( path.join( __dirname, 'client' ) ) );
 
 // SET MAXIMUM SOCKETS CONNECTIONS TO INFINITY
-https.globalAgent.maxSockets = Infinity;
+// https.globalAgent.maxSockets = Infinity;
 
 // CREATE TCP SOCKET
 const io = require('socket.io')( app,
